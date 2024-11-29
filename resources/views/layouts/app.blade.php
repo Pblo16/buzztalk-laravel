@@ -19,13 +19,12 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased">
-    <x-banner />
-
+<body
+    class="font-sans antialiased bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px] dark:bg-neutral-900">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @livewire('navigation-menu')
+        <livewire:ui.navigation />
         <!-- Page Content -->
-        <main>
+        <main class="w-full ">
             {{ $slot }}
         </main>
     </div>
