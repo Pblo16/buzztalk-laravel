@@ -1,10 +1,11 @@
 <?php
 
+use App\Livewire\Pages\Chat;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('video');
+})->name('video');
 
 Route::middleware([
     'auth:sanctum',
@@ -12,6 +13,9 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+        return redirect()->route('video');
+    });
+    Route::get('/chats', function () {
+        return view('chats');
+    })->name('chats');
 });
