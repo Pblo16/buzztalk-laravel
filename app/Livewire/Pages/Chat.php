@@ -16,8 +16,14 @@ class Chat extends Component
     public function getListeners()
     {
         return $this->currentConversation ? [
-            "echo-private:conversations.{$this->currentConversation->id},MessageSent" => 'refreshMessages',
+            "echo-private:chat.{$this->currentConversation->id},MessageSent" => 'refreshMessages',
         ] : [];
+    }
+
+    public function refreshMessages()
+    {
+        // Only refresh messages, not the entire component
+        $this->dispatch('messages-updated');
     }
 
     public function mount($conversationId = null)
@@ -29,10 +35,11 @@ class Chat extends Component
         }
     }
 
+    #[On('conversation-selected')]
     public function setActiveConversation($conversationId)
     {
-        $this->currentConversation = Conversation::findOrFail($conversationId);
-        $this->message = '';
+        $this->currentConversation = Conversation::with(['messages', 'users'])->find($conversationId);
+        $this->dispatch('active-conversation-changed', $conversationId);
     }
 
     public function sendMessage()
@@ -45,21 +52,20 @@ class Chat extends Component
         ]);
 
         broadcast(new MessageSent($message))->toOthers();
-        
+
         $this->message = '';
-        $this->dispatch('messageReceived');
+        $this->dispatch('message-sent');
     }
 
-    #[On('messageReceived')]
-    public function refreshMessages()
+    public function onConversationSelected($conversationId)
     {
-        // This method is now automatically called when 'messageReceived' event is dispatched
+        $this->currentConversation = Conversation::findOrFail($conversationId);
     }
 
     public function render()
     {
         return view('livewire.pages.chat', [
-            'conversations' => Auth::user()->conversations()->latest()->get(),
+            'conversations' => Auth::user()->conversations()->with(['lastMessage', 'users'])->latest()->get(),
             'messages' => $this->currentConversation
                 ? $this->currentConversation->messages()->orderBy('created_at', 'asc')->get()
                 : collect(),

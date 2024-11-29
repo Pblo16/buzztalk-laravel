@@ -1,5 +1,5 @@
 <div class="dark:text-white ">
-    <div class="grid grid-cols-[350px_1fr] h-[calc(100vh-58px)]">
+    <div class="grid grid-cols-[350px_1fr] h-[calc(100dvh-71px)]">
         <x-chat.sidebar :conversations="$conversations" :currentConversation="$currentConversation" />
         <div class="h-full">
             @if($currentConversation)

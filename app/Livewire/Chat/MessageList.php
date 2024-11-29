@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Livewire\Chat;
+
 use Livewire\Component;
 use App\Models\Conversation;
 
@@ -27,7 +29,12 @@ class MessageList extends Component
     public function render()
     {
         return view('livewire.chat.message-list', [
-            'messages' => $this->conversation->messages()->with('user')->get()
+            'messages' => $this->conversation->messages()
+                ->with(['user', 'attachments' => function($query) {
+                    $query->whereNotNull('path');
+                }])
+                ->orderBy('created_at', 'asc')
+                ->get()
         ]);
     }
 }
