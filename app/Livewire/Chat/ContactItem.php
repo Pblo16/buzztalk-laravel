@@ -4,44 +4,43 @@ namespace App\Livewire\Chat;
 
 use Livewire\Component;
 use App\Models\Conversation;
-use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Locked;
 
 class ContactItem extends Component
 {
-    public $conversation;
-    public $active;
-    public $conversationId;
+    public Conversation $conversation;
+    public bool $active = false;
 
-    public function mount(Conversation $conversation, $active = false)
+    public function mount(Conversation $conversation, bool $active = false)
     {
         $this->conversation = $conversation;
-        $this->conversationId = $conversation->id;
         $this->active = $active;
     }
 
-    public function getListeners()
+    public function selectConversation()
     {
-        return [
-            "echo-private:chat.{$this->conversationId},MessageSent" => 'refreshConversation',
-            'active-conversation-changed' => 'handleActiveChange'
-        ];
+        $this->active = true;
+        $this->dispatch('conversation-selected', $this->conversation->id);
     }
 
-    public function refreshConversation()
+    #[On('active-conversation-changed')]
+    public function handleActiveConversationChanged($conversationId)
     {
-        $this->conversation = Conversation::with(['lastMessage', 'users'])->find($this->conversationId);
+        $this->active = $this->conversation->id === $conversationId;
     }
 
-    public function handleActiveChange($conversationId)
+    public function dehydrate()
     {
-        $this->active = $this->conversationId == $conversationId;
+        $this->conversation->load(['users', 'lastMessage']);
     }
 
-    public function setActiveConversation()
+    public function shouldSkipRender(): bool
     {
-        $this->dispatch('conversation-selected', conversationId: $this->conversationId);
+        return true;
     }
 
+    #[Locked]
     public function render()
     {
         return view('livewire.chat.contact-item');

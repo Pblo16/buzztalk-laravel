@@ -48,11 +48,16 @@ class MessageInput extends Component
             }
         }
 
-        broadcast(new MessageSent($message))->toOthers();
+        event(new MessageSent($message));
 
+        $this->conversation = $this->conversation->fresh(['lastMessage', 'users']);
         $this->message = '';
         $this->attachments = [];
+        
+        // Update dispatch order
         $this->dispatch('messageReceived');
+        $this->dispatch('conversationUpdated', $this->conversation->id);
+        $this->dispatch('message-sent', message: $message->id);
     }
 
     public function removeAttachment($index)

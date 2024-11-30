@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Conversation extends Model
 {
     protected $fillable = ['name'];
+    protected $with = ['users', 'lastMessage'];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
     public function users(): BelongsToMany
     {
@@ -24,12 +30,21 @@ class Conversation extends Model
     {
         if ($value) return $value;
         
-        $otherUsers = $this->users->where('id', '!=', auth()->id());
-        return $otherUsers->pluck('name')->join(', ');
+        return $this->users
+            ->where('id', '!=', auth()->user()?->id)
+            ->implode('name', ', ');
     }
 
     public function lastMessage()
     {
         return $this->hasOne(Message::class)->latest();
+    }
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['users'] = $this->users->toArray();
+        $array['last_message'] = $this->lastMessage?->toArray();
+        return $array;
     }
 }

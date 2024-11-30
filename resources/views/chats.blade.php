@@ -1,6 +1,6 @@
 
 <x-app-layout>
     <div>
-        <livewire:pages.chat />
+        <livewire:chat.chat />
     </div>
 </x-app-layout>

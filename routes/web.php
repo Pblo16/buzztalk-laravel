@@ -16,6 +16,6 @@ Route::middleware([
         return redirect()->route('video');
     });
     Route::get('/chats', function () {
-        return view('chats');
-    })->name('chats');
+        return view('chat');
+    })->middleware(['auth'])->name('chat');
 });
