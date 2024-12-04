@@ -29,6 +29,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'bio',
         'password',
     ];
 
@@ -70,5 +71,32 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Conversation::class)
             ->withTimestamps();
+    }
+
+    public function receivedFriendRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'receiver_id');
+    }
+
+    public function sentFriendRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'sender_id');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'friend_requests', 'receiver_id', 'sender_id')
+                    ->wherePivot('status', 'accepted');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'friend_requests', 'sender_id', 'receiver_id')
+                    ->wherePivot('status', 'accepted');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

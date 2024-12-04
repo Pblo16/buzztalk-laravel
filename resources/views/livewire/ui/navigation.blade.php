@@ -1,7 +1,7 @@
 <div>
     <!-- ========== HEADER ========== -->
     <header
-        class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5d dark:bg-gray-950 dark:border-neutral-700">
+        class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white  text-sm py-2.5d dark:bg-[#333]/60">
         <nav class="px-4 py-4 sm:px-6 flex basis-full items-center w-full mx-auto">
             <div class="md:hidden lg:hidden">
 
@@ -35,38 +35,12 @@
                         </svg>
                     </button>
                 </div>
-                <div class="hidden md:block">
-                    <!-- Search Input -->
-                    <div class="relative w-[600px]">
-                        <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
-                            <svg class="shrink-0 size-4 text-gray-400 dark:text-white/60"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8" />
-                                <path d="m21 21-4.3-4.3" />
-                            </svg>
-                        </div>
-                        <input type="text"
-                            class="py-2 ps-10 pe-16 block w-full bg-white border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder:text-neutral-400 dark:focus:ring-neutral-600"
-                            placeholder="Search">
-                        </input>
-                    </div>
-                    <!-- End Search Input -->
-                </div>
 
                 <div class="flex flex-row items-center justify-end gap-1">
-                    <button type="button"
-                        class="md:hidden size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
-                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.3-4.3" />
-                        </svg>
-                        <span class="sr-only">Search</span>
-                    </button>
 
+                    <livewire:search-users />
+
+                    @auth
                     <button type="button"
                         class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
                         <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -77,7 +51,23 @@
                         </svg>
                         <span class="sr-only">Notifications</span>
                     </button>
-                    @auth
+                    <button type="button"
+                        class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
+                        <a href="{{ route('friends') }}">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <line x1="19" y1="8" x2="19" y2="14" />
+                                <line x1="22" y1="11" x2="16" y2="11" />
+                            </svg>
+                            @if(auth()->user()->receivedFriendRequests()->where('status', 'pending')->count() > 0)
+                            <span class="absolute top-0 end-0 size-2 bg-red-500 rounded-full"></span>
+                            @endif
+                        </a>
+                        <span class="sr-only">Friend Requests</span>
+                    </button>
                     <!-- Dropdown -->
                     <div class="ms-3 relative">
                         <x-dropdown align="right" width="48">
@@ -110,8 +100,12 @@
                                     {{ __('Manage Account') }}
                                 </div>
 
-                                <x-dropdown-link href="{{ route('profile.show') }}">
+                                <x-dropdown-link href="{{ route('profile.index') }}">
                                     {{ __('Profile') }}
+                                </x-dropdown-link>
+
+                                <x-dropdown-link href="{{ route('profile.show') }}">
+                                    {{ __('Settings') }}
                                 </x-dropdown-link>
 
                                 <div class="border-t border-gray-200 dark:border-gray-600"></div>
@@ -151,15 +145,15 @@
     </header>
     <!-- ========== END HEADER ========== -->
     <!-- Sidebar -->
-    <div id="hs-application-sidebar" class="hs-overlay [--body-scroll:true] lg:[--overlay-backdrop:false] [--is-layout-affect:true] [--auto-close:lg]
+    <div id="hs-application-sidebar" class="hs-overlay  [--auto-close:lg]
     hs-overlay-open:translate-x-0
     -translate-x-full transition-all duration-300 transform
-    w-[260px] h-full
+    w-60 h-full
     hidden
-    fixed inset-y-0 start-0 z-[60]
-    bg-white border-e border-gray-200
-
-    dark:bg-neutral-800 dark:border-neutral-700" role="dialog" tabindex="-1" aria-label="Sidebar">
+    fixed inset-y-0 start-0 z-[40]
+    bg-white
+    lg:block lg:translate-x-0 lg:end-auto lg:bottom-0
+    dark:bg-[#333] dark:border-neutral-700" role="dialog" tabindex="-1" aria-label="Sidebar">
         <div class="relative flex flex-col h-full max-h-full">
             <div class="px-6 pt-4 flex justify-center items-center">
                 <!-- Logo -->
@@ -180,9 +174,9 @@
                 <nav class="hs-accordion-group p-3 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
                     <ul class="flex flex-col space-y-1">
                         <li>
-                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('video') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
+                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('video') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
                                 href="{{ route('video') }}">
-                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -193,43 +187,73 @@
                         </li>
                         @auth
                         <li>
-                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('chats') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
+                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('chats') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
                                 href="{{ route('chats') }}">
-                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                <svg width="35" height="32" viewBox="0 0 35 32" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12.3958 25.3334H11.6666C5.83329 25.3334 2.91663 24.0001 2.91663 17.3334V10.6667C2.91663 5.33341 5.83329 2.66675 11.6666 2.66675H23.3333C29.1666 2.66675 32.0833 5.33341 32.0833 10.6667V17.3334C32.0833 22.6667 29.1666 25.3334 23.3333 25.3334H22.6041C22.152 25.3334 21.7145 25.5334 21.4375 25.8667L19.25 28.5334C18.2875 29.7067 16.7125 29.7067 15.75 28.5334L13.5625 25.8667C13.3291 25.5734 12.7895 25.3334 12.3958 25.3334Z"
+                                        stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M23.3282 14.6667H23.3413" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M17.4934 14.6667H17.5065" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M11.6587 14.6667H11.6718" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+
+
+
+                                Chats
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('post.upload') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
+                                href="{{ route('post.upload') }}">
+                                <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                                    <polyline points="9 22 9 12 15 12 15 22" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>
-                                Chats
+                                Crear
                             </a>
                         </li>
                         @endauth
                     </ul>
                 </nav>
             </div>
-            <button type="button" class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" data-hs-theme-click-value="dark">
+            <button type="button"
+                class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                data-hs-theme-click-value="dark">
                 <span class="group inline-flex shrink-0 justify-center items-center size-9">
-                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                  </svg>
+                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
                 </span>
-              </button>
-              <button type="button" class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" data-hs-theme-click-value="light">
+            </button>
+            <button type="button"
+                class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                data-hs-theme-click-value="light">
                 <span class="group inline-flex shrink-0 justify-center items-center size-9">
-                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="4"></circle>
-                    <path d="M12 2v2"></path>
-                    <path d="M12 20v2"></path>
-                    <path d="m4.93 4.93 1.41 1.41"></path>
-                    <path d="m17.66 17.66 1.41 1.41"></path>
-                    <path d="M2 12h2"></path>
-                    <path d="M20 12h2"></path>
-                    <path d="m6.34 17.66-1.41 1.41"></path>
-                    <path d="m19.07 4.93-1.41 1.41"></path>
-                  </svg>
+                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2"></path>
+                        <path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path>
+                        <path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path>
+                        <path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
                 </span>
-              </button>
+            </button>
             <!-- End Content -->
         </div>
 

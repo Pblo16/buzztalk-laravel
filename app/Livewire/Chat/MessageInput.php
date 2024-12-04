@@ -54,10 +54,10 @@ class MessageInput extends Component
         $this->message = '';
         $this->attachments = [];
         
-        // Update dispatch order
-        $this->dispatch('messageReceived');
-        $this->dispatch('conversationUpdated', $this->conversation->id);
-        $this->dispatch('message-sent', message: $message->id);
+        // Update these dispatches
+        $this->dispatch('messageSent');
+        $this->dispatch('messages-updated');
+        $this->dispatch('conversations-refreshed');
     }
 
     public function removeAttachment($index)

@@ -33,6 +33,15 @@ class LastMessage extends Component
         }
     }
 
+    public function getListeners()
+    {
+        return [
+            "echo-private:conversation.{$this->conversationId},MessageSent" => 'refreshMessage',
+            'conversations-refreshed' => 'refreshMessage',
+            'messages-updated' => 'refreshMessage'
+        ];
+    }
+
     public function render()
     {
         return view('livewire.chat.last-message');

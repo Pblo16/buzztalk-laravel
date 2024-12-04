@@ -14,24 +14,46 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <!-- Styles -->
+    <!-- Make sure this is after Vite -->
     @livewireStyles
+
 </head>
 
 <body
-    class="font-sans antialiased bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px] dark:bg-neutral-900">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    class="font-sans antialiased bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px] dark:bg-black">
+    <div class="min-h-screen dark:bg-[#252525]/100">
         <livewire:ui.navigation />
         <!-- Page Content -->
-        <main class="w-full ">
+        <main class="w-full lg:ps-60 h-[calc(100dvh-78px)] overflow-y-auto">
             {{ $slot }}
         </main>
     </div>
 
+    @livewireScripts
     @stack('modals')
 
-    @livewireScripts
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.Echo.connector.pusher.connection.bind('connected', () => {
+                console.log('Connected to WebSocket');
+            });
+
+            window.Echo.connector.pusher.connection.bind('error', (error) => {
+                console.error('WebSocket connection error:', error);
+            });
+
+            Livewire.on('friend-request-sent', () => {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Friend request sent successfully',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                })
+            });
+        });
+    </script>
 </body>
 
 </html>
