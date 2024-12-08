@@ -22,42 +22,52 @@ class MessageInput extends Component
 
     public function sendMessage()
     {
-        $this->validate([
-            'message' => 'nullable|string',
-            'attachments.*' => 'required_without:message|file|max:20480|mimes:jpeg,png,jpg,gif,pdf,doc,docx,xls,xlsx,txt',
-        ]);
+        try {
+            $this->validate([
+                'message' => 'nullable|string',
+                'attachments.*' => 'required_without:message|file|max:20480|mimes:jpeg,png,jpg,gif,pdf,doc,docx,xls,xlsx,txt',
+            ]);
 
-        if (empty($this->message) && empty($this->attachments)) {
-            return;
-        }
-
-        $message = $this->conversation->messages()->create([
-            'content' => $this->message,
-            'user_id' => Auth::id(),
-        ]);
-
-        if ($this->attachments) {
-            foreach ($this->attachments as $attachment) {
-                $path = $attachment->store('attachments', 'public');
-                $message->attachments()->create([
-                    'path' => $path,
-                    'name' => $attachment->getClientOriginalName(),
-                    'type' => $attachment->getMimeType(),
-                    'size' => $attachment->getSize()
-                ]);
+            if (empty($this->message) && empty($this->attachments)) {
+                return;
             }
+
+            $message = $this->conversation->messages()->create([
+                'content' => $this->message,
+                'user_id' => Auth::id(),
+            ]);
+
+            if ($this->attachments) {
+                foreach ($this->attachments as $attachment) {
+                    $path = $attachment->store('attachments', 'public');
+                    $message->attachments()->create([
+                        'path' => $path,
+                        'name' => $attachment->getClientOriginalName(),
+                        'type' => $attachment->getMimeType(),
+                        'size' => $attachment->getSize()
+                    ]);
+                }
+            }
+
+            try {
+                broadcast(new MessageSent($message))->toOthers();
+            } catch (\Exception $e) {
+                // Log broadcasting error but continue with local updates
+                \Log::error('Broadcasting error: ' . $e->getMessage());
+            }
+
+            $this->conversation = $this->conversation->fresh(['lastMessage', 'users']);
+            $this->message = '';
+            $this->attachments = [];
+            
+            $this->dispatch('messageSent');
+            $this->dispatch('messages-updated');
+            $this->dispatch('conversations-refreshed');
+
+        } catch (\Exception $e) {
+            \Log::error('Message sending error: ' . $e->getMessage());
+            session()->flash('error', 'Failed to send message. Please try again.');
         }
-
-        event(new MessageSent($message));
-
-        $this->conversation = $this->conversation->fresh(['lastMessage', 'users']);
-        $this->message = '';
-        $this->attachments = [];
-        
-        // Update these dispatches
-        $this->dispatch('messageSent');
-        $this->dispatch('messages-updated');
-        $this->dispatch('conversations-refreshed');
     }
 
     public function removeAttachment($index)
