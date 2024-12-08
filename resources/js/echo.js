@@ -10,11 +10,13 @@ window.Echo = new Echo({
     wsHost: `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
     wsPort: 443,
     forceTLS: true,
+    encrypted: true,
     enabledTransports: ['ws', 'wss'],
+    disableStats: true,
     auth: {
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            'Accept': 'application/json',
+            'Accept': 'application/json'
         }
     }
 });
