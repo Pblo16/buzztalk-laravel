@@ -22,7 +22,7 @@ class MessageList extends Component
     public function loadMessages()
     {
         if (!$this->conversation) return;
-        
+
         $this->messages = $this->conversation
             ->messages()
             ->with(['user', 'attachments'])
@@ -32,15 +32,23 @@ class MessageList extends Component
 
     public function getListeners()
     {
-        if (!$this->conversation) return [];
+        if (!$this->conversationId) return [];
         
         return [
-            "echo-private:conversation.{$this->conversation->id},MessageSent" => 'refreshMessages',
-            'messageReceived' => 'refreshMessages',
+            "echo-private:conversation.{$this->conversationId},MessageSent" => 'handleNewMessage',
+            'messageSent' => 'handleNewMessage',
+            'messages-updated' => 'loadMessages'
         ];
     }
 
-    #[On('conversation-selected')] 
+    public function handleNewMessage($event = null)
+    {
+        $this->loadMessages();
+        $this->dispatch('messages-updated');
+        $this->dispatch('conversations-refreshed');
+    }
+
+    #[On('conversation-selected')]
     public function handleConversationChange($conversationId)
     {
         try {
@@ -49,6 +57,7 @@ class MessageList extends Component
                 $this->conversationId = $conversationId;
                 $this->conversation = $newConversation;
                 $this->loadMessages();
+                $this->dispatch('conversation-changed', $conversationId);
             }
         } catch (\Exception $e) {
             $this->conversation = null;
@@ -56,17 +65,17 @@ class MessageList extends Component
         }
     }
 
-    #[On('message-sent')]
     #[On('messages-updated')]
     public function refreshMessages()
     {
         $this->loadMessages();
+        $this->dispatch('$refresh');
     }
 
     public function dehydrate()
     {
         if ($this->conversation) {
-            $this->conversation->load(['users', 'lastMessage']);
+            $this->conversation->load(['users', 'lastMessage', 'messages.user', 'messages.attachments']);
         }
     }
 

@@ -1,9 +1,7 @@
 @props(['conversation'])
 
-<div class="flex flex-col  h-full max-h-[calc(100vh-72px)]">
-    <div class="p-4 border-b dark:border-gray-800">
-        <h2 class="font-semibold text-lg">{{ $conversation->name }}</h2>
-    </div>
+<div class="flex flex-col max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]">
+    <x-chat.window-header :conversation="$conversation" />
 
     <livewire:chat.message-list :conversation="$conversation" :key="'chat-'.$conversation->id" />
 

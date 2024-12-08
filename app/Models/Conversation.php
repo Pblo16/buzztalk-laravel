@@ -26,13 +26,21 @@ class Conversation extends Model
         return $this->hasMany(Message::class);
     }
 
+    public function isIndividual(): bool
+    {
+        return $this->users()->count() === 2;
+    }
+
     public function getNameAttribute($value)
     {
         if ($value) return $value;
-        
-        return $this->users
-            ->where('id', '!=', auth()->user()?->id)
-            ->implode('name', ', ');
+        if ($this->isIndividual()) {
+            return $this->users
+                ->where('id', '!=', auth()->user()?->id)
+                ->first()
+                ->name;
+        }
+        return 'Group Chat';
     }
 
     public function lastMessage()

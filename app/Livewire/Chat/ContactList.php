@@ -32,6 +32,34 @@ class ContactList extends Component
         $this->dispatch('active-conversation-changed', conversationId: $conversationId);
     }
 
+    public function getListeners()
+    {
+        return [
+            'conversations-refreshed' => 'loadConversations',
+            'echo-private:conversation.*,MessageSent' => 'refreshConversations',
+            'messages-updated' => 'loadConversations',
+            'conversation-created' => 'handleNewConversation'
+        ];
+    }
+
+    #[On('messages-updated')]
+    public function refreshList()
+    {
+        $this->loadConversations();
+    }
+
+    public function refreshConversations($event)
+    {
+        $this->loadConversations();
+        $this->dispatch('$refresh');
+    }
+
+    public function handleNewConversation($conversationId)
+    {
+        $this->loadConversations();
+        $this->dispatch('conversation-selected', $conversationId);
+    }
+
     public function render()
     {
         return view('livewire.chat.contact-list', [

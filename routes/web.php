@@ -1,11 +1,16 @@
 <?php
 
-use App\Livewire\Pages\Chat;
+use App\Livewire\Friends\FriendRequest;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('video');
 })->name('video');
+
+Route::get('/websocket-test', function () {
+    return view('websocket-test');
+})->name('websocket-test');
 
 Route::middleware([
     'auth:sanctum',
@@ -16,6 +21,21 @@ Route::middleware([
         return redirect()->route('video');
     });
     Route::get('/chats', function () {
-        return view('chat');
-    })->middleware(['auth'])->name('chat');
+        return view('chats');
+    })->middleware(['auth'])->name('chats');
+
+    Route::get('/friend-requests', function () {
+        return view('friends');
+    })->middleware(['auth'])->name('friends');
+
+    Route::get('/profile/{username?}', function ($username = null) {
+        return view('profile', ['username' => $username]);
+    })->middleware(['auth'])->name('profile.index');
+
+    Route::get('/upload-post', function () {
+        return view('post');
+    })->middleware(['auth'])->name('post.upload');
+
+    // Ensure broadcasting auth route is accessible
+    Broadcast::routes(['middleware' => ['web', 'auth:sanctum']]);
 });

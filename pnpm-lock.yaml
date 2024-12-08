@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      alpinejs:
+        specifier: ^3.14.6
+        version: 3.14.6
       preline:
         specifier: ^2.5.1
         version: 2.5.1
@@ -37,8 +40,8 @@ importers:
         specifier: ^8.4.32
         version: 8.4.49
       pusher-js:
-        specifier: 8.4.0-rc2
-        version: 8.4.0-rc2
+        specifier: ^8.3.0
+        version: 8.3.0
       tailwindcss:
         specifier: ^3.4.0
         version: 3.4.15
@@ -333,6 +336,15 @@ packages:
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
+
+  '@vue/reactivity@3.1.5':
+    resolution: {integrity: sha512-1tdfLmNjWG6t/CsPldh+foumYFo3cpyCHgBYQ34ylaMsJ+SNHQ1kApMIa8jN+i593zQuaw3AdWH0nJTARzCFhg==}
+
+  '@vue/shared@3.1.5':
+    resolution: {integrity: sha512-oJ4F3TnvpXaQwZJNF3ZK+kLPHKarDmJjJ6jyzVNDKH9md1dptjC7lWR//jrGuLdek/U6iltWxqAnYOu8gCiOvA==}
+
+  alpinejs@3.14.6:
+    resolution: {integrity: sha512-8Abdd6u8oVurOChPqWCHS2Lr3C9g4+zb/kL1vNPykK/2dVkb3giTcpQ1wykzzWmX7wbTvWLnHX3I3CPPnnAMCA==}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -740,8 +752,8 @@ packages:
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
 
-  pusher-js@8.4.0-rc2:
-    resolution: {integrity: sha512-d87GjOEEl9QgO5BWmViSqW0LOzPvybvX6WA9zLUstNdB57jVJuR27zHkRnrav2a3+zAMlHbP2Og8wug+rG8T+g==}
+  pusher-js@8.3.0:
+    resolution: {integrity: sha512-6GohP06WlVeomAQQe9qWh1IDzd3+InluWt+ZUOcecVK1SEQkg6a8uYVsvxSJm7cbccfmHhE0jDkmhKIhue8vmA==}
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
@@ -1115,6 +1127,16 @@ snapshots:
       tailwindcss: 3.4.15
 
   '@types/estree@1.0.6': {}
+
+  '@vue/reactivity@3.1.5':
+    dependencies:
+      '@vue/shared': 3.1.5
+
+  '@vue/shared@3.1.5': {}
+
+  alpinejs@3.14.6:
+    dependencies:
+      '@vue/reactivity': 3.1.5
 
   ansi-regex@5.0.1: {}
 
@@ -1492,7 +1514,7 @@ snapshots:
 
   proxy-from-env@1.1.0: {}
 
-  pusher-js@8.4.0-rc2:
+  pusher-js@8.3.0:
     dependencies:
       tweetnacl: 1.0.3
 

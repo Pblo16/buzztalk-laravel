@@ -22,20 +22,20 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('conversation.' . $this->message->conversation_id)
+            new PrivateChannel("conversation.{$this->message->conversation_id}")
         ];
     }
 
     public function broadcastWith(): array
     {
         return [
-            'message' => [
-                'id' => $this->message->id,
-                'content' => $this->message->content,
-                'conversation_id' => $this->message->conversation_id,
-                'user_id' => $this->message->user_id,
-                'created_at' => $this->message->created_at,
-            ]
+            'message' => $this->message->load(['user', 'attachments'])->toArray(),
+            'conversation_id' => $this->message->conversation_id
         ];
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'MessageSent';
     }
 }

@@ -1,4 +1,4 @@
-<div x-data="{ 
+<div class="flex-1" x-data="{ 
         showModal: false,
         currentImage: '',
         images: [],
@@ -9,19 +9,48 @@
         isDragging: false,
         startX: 0,
         startY: 0
-    }" @keydown.window.escape="showModal = false">
-    <div class="flex-1 overflow-y-auto p-4 space-y-4 max-h-[calc(100vh-220px)]" x-data="{ 
+    }" x-init="
+        await new Promise(resolve => {
+            let waitForEcho = setInterval(() => {
+                if (window.Echo) {
+                    clearInterval(waitForEcho);
+                    resolve();
+                }
+            }, 100);
+        });
+        
+        let channel = Echo.private(`conversation.${@js($conversationId)}`);
+        channel.listen('.MessageSent', (e) => {
+            $wire.handleNewMessage(e);
+        });
+        
+        channel.error((error) => {
+            console.error('Echo connection error:', error);
+        });
+
+        Echo.connector.pusher.connection.bind('connected', () => {
+            console.log('Successfully connected to Reverb');
+        });
+
+        Echo.connector.pusher.connection.bind('error', (error) => {
+            console.error('Reverb connection error:', error);
+        });
+    " @scrollToBottom.window="$nextTick(() => { 
+        $el.querySelector('.messages-container').scrollTop = $el.querySelector('.messages-container').scrollHeight;
+    })" @keydown.window.escape="showModal = false">
+
+    <div class="flex-1 overflow-y-auto p-4 space-y-4 max-h-[calc(100vh-220px)] messages-container" x-data="{ 
             scrollToBottom() { 
                 this.$el.scrollTop = this.$el.scrollHeight 
             } 
-        }" x-init="scrollToBottom()" @message-received.window="scrollToBottom()" wire:poll.10s>
+        }" x-init="scrollToBottom()" @message-received.window="scrollToBottom()">
         @foreach($messages as $message)
-        <div class="flex {{ $message->user_id === auth()->id() ? 'justify-end' : 'justify-start' }}"
+        <div class="flex  {{ $message->user_id === auth()->id() ? 'justify-end' : 'justify-start' }}"
             wire:key="message-{{ $message->id }}">
             <div
-                class="max-w-[70%] {{ $message->user_id === auth()->id() ? 'bg-gray-300 dark:bg-gray-700 text-white' : 'bg-gray-300 dark:bg-gray-700' }} rounded-lg p-3">
+                class="max-w-[70%] {{ $message->user_id === auth()->id() ? 'bg-[#9377F1]' : 'bg-gray-300 dark:bg-[#333333]/60' }} rounded-lg p-3">
                 @if($message->user_id !== auth()->id())
-                <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">{{ $message->user->name }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-1 font-semibold">{{ $message->user->name }}</p>
                 @endif
 
                 @if($message->attachments && $message->attachments->count() > 0)
@@ -49,11 +78,14 @@
                 @endif
 
                 @if($message->content)
-                <p class="text-sm">{{ $message->content }}</p>
+                <p
+                    class="text-sm {{ $message->user_id === auth()->id() ? 'text-white' : 'text-gray-800 dark:text-white' }}">
+                    {{ $message->content }}
+                </p>
                 @endif
 
                 <p
-                    class="text-xs text-right {{ $message->user_id === auth()->id() ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400' }}">
+                    class="text-xs text-right mt-1 {{ $message->user_id === auth()->id() ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400' }}">
                     {{ $message->created_at->format('H:i') }}
                 </p>
             </div>
@@ -62,7 +94,7 @@
     </div>
 
     <!-- Modal -->
-    <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 z-50 "
+    <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-[#333] z-[70] "
         @wheel="zoomLevel = Math.min(Math.max(1, zoomLevel + $event.deltaY * -0.001), 5)">
         <button @click="showModal = false" class="absolute top-0 right-0 m-4 text-white text-2xl">&times;</button>
         <div class="relative flex justify-center ">
@@ -72,7 +104,7 @@
                 @mousedown="isDragging = true; startX = $event.clientX - offsetX; startY = $event.clientY - offsetY"
                 @mousemove="if(isDragging) { offsetX = $event.clientX - startX; offsetY = $event.clientY - startY }"
                 @mouseup="isDragging = false" @mouseleave="isDragging = false"
-                @touchstart="isDragging = true; startX = $event.touches[0].clientX - offsetX; startY = $event.touches[0].clientY - offsetY"
+                @touchstart="isDragging = true; startX = $event.touches[0].clientX - offsetX; startY = $event.touches[0].clientY - startY"
                 @touchmove="if(isDragging) { offsetX = $event.touches[0].clientX - startX; offsetY = $event.touches[0].clientY - startY }"
                 @touchend="isDragging = false">
             <div class="absolute inset-0 flex items-center justify-between px-4">
