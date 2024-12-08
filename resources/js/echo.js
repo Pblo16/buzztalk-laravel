@@ -1,22 +1,38 @@
-import Echo from 'laravel-echo'
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
+window.Pusher = Pusher;
 
 window.Echo = new Echo({
-  broadcaster: 'pusher',
-  key: '20e31dd6a985852b03a5',
-  cluster: 'us2',
-  forceTLS: true
+    broadcaster: 'pusher',
+    key: import.meta.env.VITE_PUSHER_APP_KEY,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    wsHost: import.meta.env.VITE_PUSHER_HOST || `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
+    wsPort: import.meta.env.VITE_PUSHER_PORT || 443,
+    forceTLS: true,
+    encrypted: true,
+    disableStats: true,
+    enabledTransports: ['ws', 'wss'],
+    auth: {
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+    }
 });
 
+// Add enhanced error handling
+window.Echo.connector.pusher.connection.bind('state_change', states => {
+    console.log('Pusher state changed:', states);
+});
 
-// Agregar logs para debugging
 window.Echo.connector.pusher.connection.bind('connected', () => {
-    console.log('Connected to Pusher!');
+    console.log('Successfully connected to Pusher');
 });
 
-window.Echo.connector.pusher.connection.bind('error', (err) => {
-    console.error('Pusher connection error:', err);
-    // Attempt to reconnect
-    window.Echo.connector.pusher.connect();
+window.Echo.connector.pusher.connection.bind('error', error => {
+    console.error('Pusher connection error:', error);
+    if (error.error.data?.code === 4004) {
+        console.log('Attempting to reconnect...');
+        window.Echo.connector.pusher.connect();
+    }
 });
-
-console.log(window.Echo.options);
