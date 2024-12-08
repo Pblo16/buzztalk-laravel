@@ -21,13 +21,11 @@
 
 <body
     class="font-sans antialiased bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px] dark:bg-black">
-    <div class="min-h-screen dark:bg-[#252525]/100">
-        <livewire:ui.navigation />
-        <!-- Page Content -->
-        <main class=" lg:ps-60 h-[calc(100dvh-78px)] overflow-y-auto">
-            {{ $slot }}
-        </main>
-    </div>
+    <livewire:ui.navigation />
+    <!-- Page Content -->
+    <main class=" lg:ps-60 h-full overflow-y-hidden dark:bg-[#252525]/100">
+        {{ $slot }}
+    </main>
 
     @livewireScripts
     @stack('modals')

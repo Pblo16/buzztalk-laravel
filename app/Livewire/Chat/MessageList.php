@@ -40,13 +40,14 @@ class MessageList extends Component
         if ($messages->isNotEmpty()) {
             $this->messages = $messages;
             $this->lastUpdate = now();
+            $this->dispatch('scrollToBottom');
         }
     }
 
     public function getListeners()
     {
         if (!$this->conversationId) return [];
-        
+
         return [
             "echo-private:conversation.{$this->conversationId},.MessageSent" => 'handleNewMessage',
             'messageSent' => 'handleNewMessage',
@@ -76,6 +77,7 @@ class MessageList extends Component
                 $this->conversation = $newConversation;
                 $this->loadMessages();
                 $this->dispatch('conversation-changed', $conversationId);
+                $this->dispatch('scrollToBottom');
             }
         } catch (\Exception $e) {
             $this->conversation = null;
@@ -120,11 +122,11 @@ class MessageList extends Component
     {
         $image = $payload['image'];
         $images = is_array($payload['images']) ? $payload['images'] : $payload['images']->toArray();
-        
-        $images = array_map(function($path) {
+
+        $images = array_map(function ($path) {
             return Storage::url($path);
         }, $images);
-        
+
         $this->dispatch('show-image-modal', [
             'image' => $image,
             'images' => $images,

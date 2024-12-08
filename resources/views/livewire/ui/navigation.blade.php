@@ -132,7 +132,7 @@
     <div id="hs-application-sidebar" class="hs-overlay  [--auto-close:lg]
     hs-overlay-open:translate-x-0
     -translate-x-full transition-all duration-300 transform
-    w-60 h-full
+    w-60 h-dvh
     hidden
     fixed inset-y-0 start-0 z-[60]
     bg-white

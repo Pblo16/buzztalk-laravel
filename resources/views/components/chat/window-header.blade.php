@@ -1,5 +1,5 @@
 @props(['conversation'])
-<div class="p-4 flex items-center gap-3 border-b dark:border-gray-800 dark:bg-[#333]">
+<div class="p-4 flex items-center gap-3 border-b dark:border-gray-800 dark:bg-[#333] min-h-20">
 
     @if($conversation->users()->count() === 2)
     {{-- Individual conversation --}}
