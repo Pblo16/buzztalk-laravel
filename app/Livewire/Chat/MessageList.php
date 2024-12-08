@@ -37,7 +37,8 @@ class MessageList extends Component
         return [
             "echo-private:conversation.{$this->conversationId},MessageSent" => 'handleNewMessage',
             'messageSent' => 'handleNewMessage',
-            'messages-updated' => 'loadMessages'
+            'messages-updated' => 'loadMessages',
+            'open-image-modal' => 'openImageModal'
         ];
     }
 
@@ -96,5 +97,14 @@ class MessageList extends Component
     public function placeholder()
     {
         return view('livewire.chat.message-list-placeholder');
+    }
+
+    public function openImageModal($data)
+    {
+        $this->dispatch('open-modal', 
+            image: $data['image'], 
+            allImages: $data['images'], 
+            index: $data['index']
+        );
     }
 }
