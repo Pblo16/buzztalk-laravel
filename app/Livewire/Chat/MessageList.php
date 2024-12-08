@@ -4,30 +4,43 @@ namespace App\Livewire\Chat;
 
 use Livewire\Component;
 use App\Models\Conversation;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
+use Illuminate\Support\Collection;
 
 class MessageList extends Component
 {
     public $conversationId;
     public $conversation;
     public $messages;
+    protected $lastUpdate;
 
     public function mount(Conversation $conversation)
     {
         $this->conversationId = $conversation->id;
         $this->conversation = $conversation;
+        $this->messages = new Collection(); // Inicializar como colección vacía
+        $this->lastUpdate = now();
         $this->loadMessages();
     }
 
     public function loadMessages()
     {
-        if (!$this->conversation) return;
+        if (!$this->conversation) {
+            $this->messages = new Collection();
+            return;
+        }
 
-        $this->messages = $this->conversation
+        $messages = $this->conversation
             ->messages()
             ->with(['user', 'attachments'])
             ->orderBy('created_at', 'asc')
             ->get();
+
+        if ($messages->isNotEmpty()) {
+            $this->messages = $messages;
+            $this->lastUpdate = now();
+        }
     }
 
     public function getListeners()
@@ -37,8 +50,7 @@ class MessageList extends Component
         return [
             "echo-private:conversation.{$this->conversationId},.MessageSent" => 'handleNewMessage',
             'messageSent' => 'handleNewMessage',
-            'messages-updated' => 'loadMessages',
-            'open-image-modal' => 'openImageModal'
+            'messages-updated' => 'loadMessages'
         ];
     }
 
@@ -46,10 +58,9 @@ class MessageList extends Component
     {
         try {
             $this->loadMessages();
+            // Emitimos el evento después de que los mensajes se hayan cargado
+            $this->dispatch('messages-received')->self();
             $this->dispatch('scrollToBottom');
-            
-            // Force a UI update
-            $this->dispatch('messages-received');
         } catch (\Exception $e) {
             \Log::error('Error handling new message: ' . $e->getMessage());
         }
@@ -80,9 +91,9 @@ class MessageList extends Component
 
     public function dehydrate()
     {
+        // Eliminar la actualización automática en dehydrate
         if ($this->conversation) {
-            $this->conversation->load(['users', 'lastMessage', 'messages.user', 'messages.attachments']);
-            $this->dispatch('scrollToBottom');
+            $this->conversation->load(['users', 'lastMessage']);
         }
     }
 
@@ -105,12 +116,19 @@ class MessageList extends Component
         return view('livewire.chat.message-list-placeholder');
     }
 
-    public function openImageModal($data)
+    public function openImageModal($payload)
     {
-        $this->dispatch('open-modal', 
-            image: $data['image'], 
-            allImages: $data['images'], 
-            index: $data['index']
-        );
+        $image = $payload['image'];
+        $images = is_array($payload['images']) ? $payload['images'] : $payload['images']->toArray();
+        
+        $images = array_map(function($path) {
+            return Storage::url($path);
+        }, $images);
+        
+        $this->dispatch('show-image-modal', [
+            'image' => $image,
+            'images' => $images,
+            'index' => $payload['index']
+        ]);
     }
 }
