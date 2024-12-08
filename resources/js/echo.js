@@ -7,19 +7,35 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: import.meta.env.VITE_PUSHER_APP_KEY,
     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
-    wsHost: `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
-    wsPort: 443,
-    forceTLS: true,
     encrypted: true,
-    enabledTransports: ['ws', 'wss'],
-    disableStats: true,
-    auth: {
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            'Accept': 'application/json'
-        }
+    forceTLS: true,
+    authorizer: (channel, options) => {
+        return {
+            authorize: (socketId, callback) => {
+                fetch('/broadcasting/auth', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        socket_id: socketId,
+                        channel_name: channel.name
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    credentials: 'same-origin',
+                })
+                .then(response => response.json())
+                .then(response => {
+                    callback(false, response);
+                })
+                .catch(error => {
+                    callback(true, error);
+                });
+            }
+        };
     }
 });
+
 
 // Agregar logs para debugging
 window.Echo.connector.pusher.connection.bind('connected', () => {

@@ -4,6 +4,9 @@ use App\Livewire\Friends\FriendRequest;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
+// Move broadcast routes to root scope and remove duplicate
+Broadcast::routes(['middleware' => ['web', 'auth:sanctum']]);
+
 Route::get('/', function () {
     return view('video');
 })->name('video');
@@ -35,7 +38,4 @@ Route::middleware([
     Route::get('/upload-post', function () {
         return view('post');
     })->middleware(['auth'])->name('post.upload');
-
-    // Ensure broadcasting auth route is accessible
-    Broadcast::routes(['middleware' => ['web', 'auth:sanctum']]);
 });
