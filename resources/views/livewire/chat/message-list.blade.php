@@ -1,5 +1,5 @@
 <div>
-    <div class="flex-1 overflow-y-auto p-4 flex flex-col-reverse messages-container min-h-[calc(100dvh-230px)] max-h-[calc(100dvh-230px)]"
+    <div class="flex-1 overflow-y-auto p-4 flex flex-col-reverse messages-container min-h-[calc(100dvh-215px)] max-h-[calc(100dvh-215px)]"
         id="messages-container">
         @if($messages && $messages->count() > 0)
         <div class="flex flex-col-reverse gap-4">
