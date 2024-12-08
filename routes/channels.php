@@ -14,6 +14,7 @@ use App\Models\Conversation;
 |
 */
 
-Broadcast::channel('conversation.{conversation}', function ($user, Conversation $conversation) {
-    return $conversation->users()->where('user_id', $user->id)->exists();
+Broadcast::channel('conversation.{id}', function ($user, $id) {
+    // Verifica que el usuario tenga acceso a la conversación
+    return $user->conversations()->where('conversations.id', $id)->exists();
 });
