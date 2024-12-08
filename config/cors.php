@@ -17,8 +17,16 @@ return [
 
     'paths' => ['api/*', 'broadcasting/auth', 'sanctum/csrf-cookie'],
     'allowed_methods' => ['*'],
-    'allowed_origins' => ['http://127.0.0.1:8000', 'http://localhost:8000'],
-    'allowed_origins_patterns' => [],
+    'allowed_origins' => [
+        'http://127.0.0.1:8000', 
+        'http://localhost:8000',
+        'https://buzztalk.lujolab.info'
+    ],
+    'allowed_origins_patterns' => [
+        'https://*.pusher.com',
+        'wss://*.pusher.com',
+        'https://sockjs-*.pusher.com'
+    ],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],
     'max_age' => 0,

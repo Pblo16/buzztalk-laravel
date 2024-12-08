@@ -54,7 +54,7 @@ return [
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'encrypted' => true,
-                'host' => "api-{$_ENV['PUSHER_APP_CLUSTER']}.pusher.com",
+                'host' => null, // Let Pusher handle the host
                 'port' => 443,
                 'scheme' => 'https',
                 'useTLS' => true,
