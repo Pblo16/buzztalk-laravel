@@ -58,6 +58,9 @@ return [
                 'scheme' => env('PUSHER_SCHEME', 'https'),
                 'encrypted' => true,
                 'useTLS' => true,
+                'ws_host' => env('PUSHER_HOST') ?: 'ws-'.env('PUSHER_APP_CLUSTER', 'mt1').'.pusher.com',
+                'ws_port' => 443,
+                'force_tls' => true,
                 'curl_options' => [
                     CURLOPT_SSL_VERIFYHOST => 0,
                     CURLOPT_SSL_VERIFYPEER => false,
