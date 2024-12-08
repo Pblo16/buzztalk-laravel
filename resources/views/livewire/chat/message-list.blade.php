@@ -1,4 +1,5 @@
-<div class="flex-1" x-data="{ 
+<div class="flex-1" 
+    x-data="{ 
         showModal: false,
         currentImage: '',
         images: [],
@@ -9,33 +10,17 @@
         isDragging: false,
         startX: 0,
         startY: 0
-    }" x-init="
-        await new Promise(resolve => {
-            let waitForEcho = setInterval(() => {
-                if (window.Echo) {
-                    clearInterval(waitForEcho);
-                    resolve();
-                }
-            }, 100);
-        });
-        
-        let channel = Echo.private(`conversation.${@js($conversationId)}`);
-        channel.listen('.MessageSent', (e) => {
-            $wire.handleNewMessage(e);
-        });
-        
-        channel.error((error) => {
-            console.error('Echo connection error:', error);
-        });
-
-        Echo.connector.pusher.connection.bind('connected', () => {
-            console.log('Successfully connected to Pusher');
-        });
-
-        Echo.connector.pusher.connection.bind('error', (error) => {
-            console.error('Pusher connection error:', error);
-        });
-    " @scrollToBottom.window="$nextTick(() => { 
+    }" 
+    x-init="
+        setTimeout(() => {
+            window.Echo.private(`conversation.${@js($conversationId)}`)
+                .listen('.MessageSent', (e) => {
+                    @this.call('handleNewMessage', e);
+                });
+        }, 500);
+    "
+    {{-- wire:poll.10s="refreshMessages" --}}
+    @scrollToBottom.window="$nextTick(() => { 
         $el.querySelector('.messages-container').scrollTop = $el.querySelector('.messages-container').scrollHeight;
     })" @keydown.window.escape="showModal = false">
 
