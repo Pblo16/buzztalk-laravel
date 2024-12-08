@@ -35,14 +35,6 @@
         Echo.connector.pusher.connection.bind('error', (error) => {
             console.error('Pusher connection error:', error);
         });
-
-        Echo.connector.pusher.connection.bind('connected', () => {
-            console.log('Successfully connected to Reverb');
-        });
-
-        Echo.connector.pusher.connection.bind('error', (error) => {
-            console.error('Reverb connection error:', error);
-        });
     " @scrollToBottom.window="$nextTick(() => { 
         $el.querySelector('.messages-container').scrollTop = $el.querySelector('.messages-container').scrollHeight;
     })" @keydown.window.escape="showModal = false">
