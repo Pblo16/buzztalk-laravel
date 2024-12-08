@@ -8,8 +8,4 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    define: {
-        'process.env.VITE_PUSHER_APP_KEY': JSON.stringify(process.env.VITE_PUSHER_APP_KEY),
-        'process.env.VITE_PUSHER_APP_CLUSTER': JSON.stringify(process.env.VITE_PUSHER_APP_CLUSTER),
-    }
 });
