@@ -29,6 +29,14 @@
         });
 
         Echo.connector.pusher.connection.bind('connected', () => {
+            console.log('Successfully connected to Pusher');
+        });
+
+        Echo.connector.pusher.connection.bind('error', (error) => {
+            console.error('Pusher connection error:', error);
+        });
+
+        Echo.connector.pusher.connection.bind('connected', () => {
             console.log('Successfully connected to Reverb');
         });
 
