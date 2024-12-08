@@ -1,6 +1,6 @@
 <div class="max-w-4xl mx-auto py-8 dark:text-white sm:px-2">
     <!-- Header -->
-    <div class="flex items-center gap-8 mb-8">
+    <div class="flex items-center gap-8 mb-8 px-10">
         <!-- Profile Image -->
         <div class="w-32 h-32">
             <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}"

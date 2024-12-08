@@ -1,6 +1,6 @@
 @props(['conversation'])
 
-<div class="flex flex-col max-h-[calc(100vh-80px)] min-h-[calc(100vh-80px)]">
+<div class="flex flex-col max-h-[calc(dvh-70px)] min-h-[calc(dvh-70px)]">
     <x-chat.window-header :conversation="$conversation" />
 
     <livewire:chat.message-list :conversation="$conversation" :key="'chat-'.$conversation->id" />

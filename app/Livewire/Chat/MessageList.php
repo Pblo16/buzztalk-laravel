@@ -34,7 +34,7 @@ class MessageList extends Component
         $messages = $this->conversation
             ->messages()
             ->with(['user', 'attachments'])
-            ->orderBy('created_at', 'asc')
+            ->orderBy('created_at', 'desc') // Cambiado a desc para mostrar los más recientes primero
             ->get();
 
         if ($messages->isNotEmpty()) {

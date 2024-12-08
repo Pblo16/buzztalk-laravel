@@ -1,5 +1,6 @@
 import './bootstrap';
 import 'preline';
+import { HSThemeAppearance, HSOverlay } from 'preline/preline';
 // Echo initialized in bootstrap.js
 
 const html = document.querySelector('html');

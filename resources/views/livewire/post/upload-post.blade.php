@@ -1,4 +1,4 @@
-<div class="flex h-full items-center justify-center">
+<div class="flex flex-1 items-center justify-center min-h-[calc(100vh-4rem)]">
     <form wire:submit.prevent="save" enctype="multipart/form-data">
         <div class="max-w-96 min-h-80 mx-auto p-4 bg-white shadow-md rounded-lg">
             <textarea wire:model="caption" placeholder="Add a caption..."
@@ -21,8 +21,7 @@
                 </div>
                 @endif
 
-                <input type="file" wire:model="media"
-                    accept=".mp4,.mov,.jpg,.jpeg,.png,.gif"
+                <input type="file" wire:model="media" accept=".mp4,.mov,.jpg,.jpeg,.png,.gif"
                     class="w-full text-sm text-gray-500 mt-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
 
                 <!-- Barra de Progreso -->

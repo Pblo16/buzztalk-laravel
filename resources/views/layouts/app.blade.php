@@ -20,38 +20,22 @@
 </head>
 
 <body
-    class="font-sans antialiased bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px] dark:bg-black">
+    class="font-sans antialiased bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px] dark:bg-[#252525] min-h-dvh flex flex-col">
     <livewire:ui.navigation />
-    <!-- Page Content -->
-    <main class=" lg:ps-60 h-full overflow-y-hidden dark:bg-[#252525]/100">
-        {{ $slot }}
-    </main>
+    <!-- Main content wrapper -->
+    <div class="flex flex-1 h-full">
+        <!-- Page Content -->
+        <main class="lg:ps-60 dark:bg-[#252525]/100 w-full flex-1">
+            {{ $slot }}
+        </main>
+    </div>
 
     @livewireScripts
     @stack('modals')
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            window.Echo.connector.pusher.connection.bind('connected', () => {
-                console.log('Connected to WebSocket');
-            });
 
-            window.Echo.connector.pusher.connection.bind('error', (error) => {
-                console.error('WebSocket connection error:', error);
-            });
-
-            Livewire.on('friend-request-sent', () => {
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Friend request sent successfully',
-                    icon: 'success',
-                    confirmButtonText: 'Ok'
-                })
-            });
-        });
-    </script>
 </body>
 
 </html>

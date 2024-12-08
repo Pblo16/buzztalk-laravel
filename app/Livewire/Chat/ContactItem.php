@@ -9,8 +9,8 @@ use Livewire\Attributes\Locked;
 
 class ContactItem extends Component
 {
-    public Conversation $conversation;
-    public bool $active = false;
+    public $conversation;
+    public $active;
 
     public function mount(Conversation $conversation, bool $active = false)
     {
@@ -20,8 +20,11 @@ class ContactItem extends Component
 
     public function selectConversation()
     {
-        $this->active = true;
-        $this->dispatch('conversation-selected', $this->conversation->id);
+        $this->dispatch('conversation-selected', conversationId: $this->conversation->id)
+             ->to('chat.chat');
+        
+        $this->dispatch('show-mobile-chat')
+             ->to('chat.chat');
     }
 
     #[On('active-conversation-changed')]

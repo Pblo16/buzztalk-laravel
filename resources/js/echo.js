@@ -12,14 +12,3 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 });
 
-
-// Agregar logs para debugging
-window.Echo.connector.pusher.connection.bind('connected', () => {
-    console.log('Connected to Pusher!');
-});
-
-window.Echo.connector.pusher.connection.bind('error', (err) => {
-    console.error('Pusher connection error:', err);
-});
-
-console.log(window.Echo.options);

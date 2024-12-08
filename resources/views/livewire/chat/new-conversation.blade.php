@@ -1,5 +1,5 @@
 <div>
-    <div wire:click="toggleModal" class="absolute bottom-0 m-4 p-2 rounded-full bg-[#9377F1] hover:cursor-pointer">
+    <div wire:click="toggleModal" class="fixed bottom-0 m-4 p-2 rounded-full bg-[#9377F1] hover:cursor-pointer">
         <svg width="35" height="32" viewBox="0 0 35 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M13.125 29.3334H21.875C29.1666 29.3334 32.0833 26.6667 32.0833 20.0001V12.0001C32.0833 5.33341 29.1666 2.66675 21.875 2.66675H13.125C5.83329 2.66675 2.91663 5.33341 2.91663 12.0001V20.0001C2.91663 26.6667 5.83329 29.3334 13.125 29.3334Z"

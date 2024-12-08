@@ -3,7 +3,7 @@
     <header
         class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white  text-sm py-2.5d dark:bg-[#333]/60 }">
         <nav class="lg:ps-60 px-4 py-4 sm:px-6 flex basis-full items-center w-full mx-auto">
-            <div class="md:hidden lg:hidden">
+            <div class="lg:hidden">
                 <button type="button"
                     class="size-8 flex justify-center items-center gap-x-2 border border-gray-200 text-gray-800 hover:text-gray-500 rounded-lg focus:outline-none focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
                     aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar"
@@ -129,19 +129,13 @@
     </header>
     <!-- ========== END HEADER ========== -->
     <!-- Sidebar -->
-    <div id="hs-application-sidebar" class="hs-overlay  [--auto-close:lg]
-    hs-overlay-open:translate-x-0
-    -translate-x-full transition-all duration-300 transform
-    w-60 h-dvh
-    hidden
-    fixed inset-y-0 start-0 z-[60]
-    bg-white
-    lg:block lg:translate-x-0 lg:end-auto lg:bottom-0
-    dark:bg-[#333] dark:border-neutral-700" role="dialog" tabindex="-1" aria-label="Sidebar">
+    <div id="hs-application-sidebar"
+        class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform fixed top-0 start-0 bottom-0 z-[60] w-60 bg-white pt-4 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-[#333]">
         <div class="relative flex flex-col h-full max-h-full">
             <div class="px-6 pt-4 flex justify-center items-center">
                 <!-- Logo -->
-                <a wire:navigate class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80 dark:text-white"
+                <a wire:navigate
+                    class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80 dark:text-white"
                     href="{{ route('video')}}" aria-label="Preline">
                     <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -158,7 +152,7 @@
                 <nav class="hs-accordion-group p-3 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
                     <ul class="flex flex-col space-y-1">
                         <li>
-                            <a wire:navigate class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('video') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
+                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('video') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
                                 href="{{ route('video') }}">
                                 <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -171,7 +165,7 @@
                         </li>
                         @auth
                         <li>
-                            <a wire:navigate class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('chats') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
+                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('chats') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
                                 href="{{ route('chats') }}">
                                 <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -185,7 +179,7 @@
                         </li>
 
                         <li>
-                            <a wire:navigate class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('post.upload') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
+                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('post.upload') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
                                 href="{{ route('post.upload') }}">
                                 <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -199,39 +193,43 @@
                     </ul>
                 </nav>
             </div>
-            <button type="button"
-                class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                data-hs-theme-click-value="dark">
-                <span class="group inline-flex shrink-0 justify-center items-center size-9">
-                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                    </svg>
-                </span>
-            </button>
-            <button type="button"
-                class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                data-hs-theme-click-value="light">
-                <span class="group inline-flex shrink-0 justify-center items-center size-9">
-                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <path d="M12 2v2"></path>
-                        <path d="M12 20v2"></path>
-                        <path d="m4.93 4.93 1.41 1.41"></path>
-                        <path d="m17.66 17.66 1.41 1.41"></path>
-                        <path d="M2 12h2"></path>
-                        <path d="M20 12h2"></path>
-                        <path d="m6.34 17.66-1.41 1.41"></path>
-                        <path d="m19.07 4.93-1.41 1.41"></path>
-                    </svg>
-                </span>
-            </button>
-            <!-- End Content -->
         </div>
-
+        <!-- Theme Switcher -->
+        <div class="absolute bottom-0 w-full p-4">
+            <button type="button"
+                class="hs-dark-mode-active:hidden block w-full hs-dark-mode group items-center text-gray-600 hover:text-blue-600 font-medium dark:text-gray-400 dark:hover:text-gray-500"
+                data-hs-theme-click-value="dark">
+                <span class="group inline-flex items-center gap-x-2">
+                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                </span>
+            </button>
+            <button type="button"
+                class="hs-dark-mode-active:block hidden w-full hs-dark-mode group items-center text-gray-600 hover:text-blue-600 font-medium dark:text-gray-400 dark:hover:text-gray-500"
+                data-hs-theme-click-value="light">
+                <span class="group inline-flex items-center gap-x-2">
+                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4" />
+                        <path d="M12 2v2" />
+                        <path d="M12 20v2" />
+                        <path d="m4.93 4.93 1.41 1.41" />
+                        <path d="m17.66 17.66 1.41 1.41" />
+                        <path d="M2 12h2" />
+                        <path d="M20 12h2" />
+                        <path d="m6.34 17.66-1.41 1.41" />
+                        <path d="m19.07 4.93-1.41 1.41" />
+                    </svg>
+                </span>
+            </button>
+        </div>
+        <!-- End Theme Switcher -->
     </div>
     <!-- End Sidebar -->
 </div>
+
+<!-- Initialize theme functionality -->
