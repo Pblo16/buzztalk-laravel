@@ -35,7 +35,7 @@ class MessageList extends Component
         if (!$this->conversationId) return [];
         
         return [
-            "echo-private:conversation.{$this->conversationId},.MessageSent" => 'handleNewMessage', // Note the dot before MessageSent
+            "echo-private:conversation.{$this->conversationId},.MessageSent" => 'handleNewMessage',
             'messageSent' => 'handleNewMessage',
             'messages-updated' => 'loadMessages',
             'open-image-modal' => 'openImageModal'
@@ -44,8 +44,15 @@ class MessageList extends Component
 
     public function handleNewMessage($event = null)
     {
-        $this->loadMessages();
-        $this->dispatch('scrollToBottom');
+        try {
+            $this->loadMessages();
+            $this->dispatch('scrollToBottom');
+            
+            // Force a UI update
+            $this->dispatch('messages-received');
+        } catch (\Exception $e) {
+            \Log::error('Error handling new message: ' . $e->getMessage());
+        }
     }
 
     #[On('conversation-selected')]

@@ -20,33 +20,21 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('conversation.' . $this->message->conversation_id)
+            new PrivateChannel("conversation.{$this->message->conversation_id}")
         ];
     }
 
     public function broadcastWith(): array
     {
-        try {
-            $message = $this->message->fresh(['user', 'attachments']);
-            
-            return [
-                'message' => [
-                    'id' => $message->id,
-                    'content' => $message->content,
-                    'user_id' => $message->user_id,
-                    'conversation_id' => $message->conversation_id,
-                    'created_at' => $message->created_at?->toISOString(),
-                    'updated_at' => $message->updated_at?->toISOString(),
-                    'user' => $message->user,
-                    'attachments' => $message->attachments
-                ],
-                'conversation_id' => $message->conversation_id,
-                'timestamp' => now()->toISOString()
-            ];
-        } catch (\Exception $e) {
-            \Log::error('Broadcasting data preparation error: ' . $e->getMessage());
-            return [];
-        }
+        $message = $this->message->fresh(['user', 'attachments']);
+        
+        return [
+            'message' => $message->toArray(),
+            'user' => $message->user,
+            'attachments' => $message->attachments,
+            'conversation_id' => $message->conversation_id,
+            'timestamp' => now()->toISOString()
+        ];
     }
 
     public function broadcastAs(): string

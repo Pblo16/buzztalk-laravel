@@ -62,9 +62,10 @@ return [
                 'ws_port' => 443,
                 'force_tls' => true,
                 'curl_options' => [
-                    CURLOPT_SSL_VERIFYHOST => 0,
-                    CURLOPT_SSL_VERIFYPEER => false,
+                    CURLOPT_SSL_VERIFYHOST => env('APP_ENV') === 'production' ? 2 : 0,
+                    CURLOPT_SSL_VERIFYPEER => env('APP_ENV') === 'production',
                 ],
+                'debug' => env('APP_DEBUG', false),
             ],
             'client_options' => [
                 CURLOPT_TIMEOUT => 30,
