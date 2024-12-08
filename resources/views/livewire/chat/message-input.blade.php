@@ -12,13 +12,13 @@
     <form wire:submit.prevent="sendMessage" class="flex items-center gap-2">
 
         <input type="text" wire:model.defer="message" wire:key="message-input-{{ now() }}"
-            class="w-full rounded-lg px-4 py-2 focus:outline-none border-0 bg-[#252525]"
+            class="w-full rounded-lg px-4 py-2 focus:outline-none border-0 bg-gray-300 dark:bg-[#252525]"
             placeholder="Type a message...">
         <div class="relative">
             <input type="file" id="attachment" wire:model="attachments" x-ref="fileInput" class="hidden"
                 accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,image/*" multiple>
             <label for="attachment" x-data @click.prevent="$refs.fileInput.click()"
-                class="cursor-pointer hover:bg-gray-600 text-white rounded-sm p-2 inline-block">
+                class="cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600 text-white rounded-sm p-2 inline-block">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
                         stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -32,7 +32,8 @@
 
             </label>
         </div>
-        <button type="submit" class=" hover:bg-gray-600 text-white p-2">
+        <button type="submit"
+            class="hover:bg-gray-300 dark:hover:bg-gray-600hover:bg-gray-300 dark:hover:bg-gray-600 text-white p-2 rounded-lg">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M19.2899 9.17005L7.6999 3.07005C4.9499 1.62005 1.9599 4.55005 3.3499 7.33005L4.9699 10.57C5.4199 11.47 5.4199 12.53 4.9699 13.43L3.3499 16.67C1.9599 19.45 4.9499 22.37 7.6999 20.93L19.2899 14.83C21.5699 13.63 21.5699 10.37 19.2899 9.17005Z"

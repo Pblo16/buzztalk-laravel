@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -15,6 +14,7 @@ return new class extends Migration
             $table->string('caption')->nullable();
             $table->string('media_path');
             $table->enum('media_type', ['image', 'video']);
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });
     }

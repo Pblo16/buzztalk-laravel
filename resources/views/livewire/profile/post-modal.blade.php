@@ -1,10 +1,10 @@
-<div class="fixed inset-0 z-50 overflow-y-auto" style="display: {{ $show ? 'block' : 'none' }}">
+<div class="fixed inset-0 z-[70] overflow-y-auto" style="display: {{ $show ? 'block' : 'none' }}">
     <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
         <div class="fixed inset-0 transition-opacity" aria-hidden="true" wire:click="close">
-            <div class="absolute inset-0 bg-gray-900 opacity-75"></div>
+            <div class="absolute inset-0 bg-black opacity-75"></div>
         </div>
 
-        <div class="inline-block w-full max-w-6xl overflow-hidden align-middle transition-all transform bg-white shadow-xl sm:rounded-lg dark:bg-gray-950"
+        <div class="inline-block w-full max-w-6xl overflow-hidden align-middle transition-all transform bg-white shadow-xl sm:rounded-lg dark:bg-[#333]"
             style="max-height: 90vh">
             <div class="flex h-full">
                 <!-- Media Section -->

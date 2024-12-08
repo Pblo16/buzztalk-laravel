@@ -37,7 +37,8 @@ class ContactList extends Component
         return [
             'conversations-refreshed' => 'loadConversations',
             'echo-private:conversation.*,MessageSent' => 'refreshConversations',
-            'messages-updated' => 'loadConversations'
+            'messages-updated' => 'loadConversations',
+            'conversation-created' => 'handleNewConversation'
         ];
     }
 
@@ -51,6 +52,12 @@ class ContactList extends Component
     {
         $this->loadConversations();
         $this->dispatch('$refresh');
+    }
+
+    public function handleNewConversation($conversationId)
+    {
+        $this->loadConversations();
+        $this->dispatch('conversation-selected', $conversationId);
     }
 
     public function render()

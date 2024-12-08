@@ -1,10 +1,9 @@
 <div>
     <!-- ========== HEADER ========== -->
     <header
-        class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white  text-sm py-2.5d dark:bg-[#333]/60">
-        <nav class="px-4 py-4 sm:px-6 flex basis-full items-center w-full mx-auto">
+        class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white  text-sm py-2.5d dark:bg-[#333]/60 }">
+        <nav class="lg:ps-60 px-4 py-4 sm:px-6 flex basis-full items-center w-full mx-auto">
             <div class="md:hidden lg:hidden">
-
                 <button type="button"
                     class="size-8 flex justify-center items-center gap-x-2 border border-gray-200 text-gray-800 hover:text-gray-500 rounded-lg focus:outline-none focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
                     aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar"
@@ -19,22 +18,7 @@
                     </svg>
                 </button>
             </div>
-            <div class="w-full flex items-center justify-end ms-auto md:justify-between gap-x-1 md:gap-x-3">
-                <div class="hidden md:block">
-                    <button type="button"
-                        class="size-8 flex justify-center items-center gap-x-2 border border-gray-200 text-gray-800 hover:text-gray-500 rounded-lg focus:outline-none focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
-                        aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar"
-                        aria-label="Toggle navigation" data-hs-overlay="#hs-application-sidebar">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <rect width="18" height="18" x="3" y="3" rx="2" />
-                            <path d="M15 3v18" />
-                            <path d="m8 9 3 3-3 3" />
-                        </svg>
-                    </button>
-                </div>
+            <div class="w-full flex items-center justify-end ms-auto gap-x-1 md:gap-x-3">
 
                 <div class="flex flex-row items-center justify-end gap-1">
 
@@ -131,7 +115,7 @@
                             class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
                         @else
                         <a href="{{ route('login') }}"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Log
+                            class="transition-colors bg-gray-200 text-black hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium dark:text-white dark:bg-[#252525] dark:hover:bg-white dark:hover:text-black">Log
                             in</a>
 
                         @endauth
@@ -150,14 +134,14 @@
     -translate-x-full transition-all duration-300 transform
     w-60 h-full
     hidden
-    fixed inset-y-0 start-0 z-[40]
+    fixed inset-y-0 start-0 z-[60]
     bg-white
     lg:block lg:translate-x-0 lg:end-auto lg:bottom-0
     dark:bg-[#333] dark:border-neutral-700" role="dialog" tabindex="-1" aria-label="Sidebar">
         <div class="relative flex flex-col h-full max-h-full">
             <div class="px-6 pt-4 flex justify-center items-center">
                 <!-- Logo -->
-                <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80 dark:text-white"
+                <a wire:navigate class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80 dark:text-white"
                     href="{{ route('video')}}" aria-label="Preline">
                     <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -174,7 +158,7 @@
                 <nav class="hs-accordion-group p-3 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
                     <ul class="flex flex-col space-y-1">
                         <li>
-                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('video') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
+                            <a wire:navigate class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('video') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
                                 href="{{ route('video') }}">
                                 <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -187,30 +171,21 @@
                         </li>
                         @auth
                         <li>
-                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('chats') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
+                            <a wire:navigate class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('chats') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
                                 href="{{ route('chats') }}">
-                                <svg width="35" height="32" viewBox="0 0 35 32" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12.3958 25.3334H11.6666C5.83329 25.3334 2.91663 24.0001 2.91663 17.3334V10.6667C2.91663 5.33341 5.83329 2.66675 11.6666 2.66675H23.3333C29.1666 2.66675 32.0833 5.33341 32.0833 10.6667V17.3334C32.0833 22.6667 29.1666 25.3334 23.3333 25.3334H22.6041C22.152 25.3334 21.7145 25.5334 21.4375 25.8667L19.25 28.5334C18.2875 29.7067 16.7125 29.7067 15.75 28.5334L13.5625 25.8667C13.3291 25.5734 12.7895 25.3334 12.3958 25.3334Z"
-                                        stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                    <path d="M23.3282 14.6667H23.3413" stroke="white" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M17.4934 14.6667H17.5065" stroke="white" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M11.6587 14.6667H11.6718" stroke="white" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
+                                <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                                 </svg>
-
-
 
                                 Chats
                             </a>
                         </li>
 
                         <li>
-                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('post.upload') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
+                            <a wire:navigate class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('post.upload') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
                                 href="{{ route('post.upload') }}">
                                 <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

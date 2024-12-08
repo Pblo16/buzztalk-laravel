@@ -24,7 +24,7 @@
     <div class="min-h-screen dark:bg-[#252525]/100">
         <livewire:ui.navigation />
         <!-- Page Content -->
-        <main class="w-full lg:ps-60 h-[calc(100dvh-78px)] overflow-y-auto">
+        <main class=" lg:ps-60 h-[calc(100dvh-78px)] overflow-y-auto">
             {{ $slot }}
         </main>
     </div>

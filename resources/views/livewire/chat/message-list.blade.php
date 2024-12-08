@@ -94,7 +94,7 @@
     </div>
 
     <!-- Modal -->
-    <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-[#333] z-50 "
+    <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-[#333] z-[70] "
         @wheel="zoomLevel = Math.min(Math.max(1, zoomLevel + $event.deltaY * -0.001), 5)">
         <button @click="showModal = false" class="absolute top-0 right-0 m-4 text-white text-2xl">&times;</button>
         <div class="relative flex justify-center ">

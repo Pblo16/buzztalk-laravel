@@ -11,8 +11,4 @@ else if (isDarkOrAuto && html.classList.contains('light')) html.classList.remove
 else if (isDarkOrAuto && !html.classList.contains('dark')) html.classList.add('dark');
 else if (isLightOrAuto && !html.classList.contains('light')) html.classList.add('light');
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        window.Livewire.emit('escapePressed');
-    }
-});
+
