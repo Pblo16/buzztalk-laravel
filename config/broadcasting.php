@@ -53,23 +53,7 @@ return [
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
-                'host' => env('PUSHER_HOST') ?: 'api-'.env('PUSHER_APP_CLUSTER', 'mt1').'.pusher.com',
-                'port' => env('PUSHER_PORT', 443),
-                'scheme' => env('PUSHER_SCHEME', 'https'),
-                'encrypted' => true,
                 'useTLS' => true,
-                'ws_host' => env('PUSHER_HOST') ?: 'ws-'.env('PUSHER_APP_CLUSTER', 'mt1').'.pusher.com',
-                'ws_port' => 443,
-                'force_tls' => true,
-                'curl_options' => [
-                    CURLOPT_SSL_VERIFYHOST => env('APP_ENV') === 'production' ? 2 : 0,
-                    CURLOPT_SSL_VERIFYPEER => env('APP_ENV') === 'production',
-                ],
-                'debug' => env('APP_DEBUG', false),
-            ],
-            'client_options' => [
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_CONNECTTIMEOUT => 10,
             ],
         ],
 
