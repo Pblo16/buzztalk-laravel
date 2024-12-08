@@ -40,6 +40,7 @@ class MessageList extends Component
         if ($messages->isNotEmpty()) {
             $this->messages = $messages;
             $this->lastUpdate = now();
+            $this->dispatch('chat-messages-updated');
             $this->dispatch('scrollToBottom');
         }
     }

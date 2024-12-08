@@ -1,7 +1,6 @@
 <div>
     <div class="flex-1 overflow-y-auto p-4 space-y-4 messages-container min-h-[calc(100dvh-230px)] max-h-[calc(100dvh-230px)]"
-        id="messages-container" x-data x-init="$nextTick(() => $el.scrollTop = $el.scrollHeight)"
-        @scrollToBottom.window="$nextTick(() => $el.scrollTop = $el.scrollHeight)">
+        id="messages-container">
         @if($messages && $messages->count() > 0)
         @foreach($messages as $message)
         <div class="flex {{ $message->user_id === auth()->id() ? 'justify-end' : 'justify-start' }}"
@@ -61,4 +60,30 @@
         @endif
     </div>
     <livewire:chat.image-modal />
+
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            const scrollToBottom = () => {
+                const container = document.getElementById('messages-container');
+                if (container) {
+                    container.scrollTop = container.scrollHeight;
+                }
+            };
+
+            // Scroll inicial
+            scrollToBottom();
+
+            // Eventos para scroll
+            Livewire.on('chat-messages-updated', scrollToBottom);
+            Livewire.on('messageSent', scrollToBottom);
+            Livewire.on('scrollToBottom', scrollToBottom);
+
+            // Observer para detectar cambios en el contenido
+            const observer = new MutationObserver(scrollToBottom);
+            const container = document.getElementById('messages-container');
+            if (container) {
+                observer.observe(container, { childList: true, subtree: true });
+            }
+        });
+    </script>
 </div>
