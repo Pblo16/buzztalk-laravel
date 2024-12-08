@@ -1,15 +1,10 @@
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
-
-window.Pusher = Pusher;
+import Echo from 'laravel-echo'
 
 window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: import.meta.env.VITE_PUSHER_APP_KEY,
-    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER, // Make sure the cluster is set
-    forceTLS: true,
-    encrypted: true,
-    enabledTransports: ['ws', 'wss'],
+  broadcaster: 'pusher',
+  key: '20e31dd6a985852b03a5',
+  cluster: 'us2',
+  forceTLS: true
 });
 
 
@@ -20,6 +15,8 @@ window.Echo.connector.pusher.connection.bind('connected', () => {
 
 window.Echo.connector.pusher.connection.bind('error', (err) => {
     console.error('Pusher connection error:', err);
+    // Attempt to reconnect
+    window.Echo.connector.pusher.connect();
 });
 
 console.log(window.Echo.options);
