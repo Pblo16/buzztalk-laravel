@@ -35,7 +35,7 @@ class MessageList extends Component
         if (!$this->conversationId) return [];
         
         return [
-            "echo-private:conversation.{$this->conversationId},MessageSent" => 'handleNewMessage',
+            "echo-private:conversation.{$this->conversationId},.MessageSent" => 'handleNewMessage', // Note the dot before MessageSent
             'messageSent' => 'handleNewMessage',
             'messages-updated' => 'loadMessages',
             'open-image-modal' => 'openImageModal'
@@ -45,8 +45,7 @@ class MessageList extends Component
     public function handleNewMessage($event = null)
     {
         $this->loadMessages();
-        $this->dispatch('messages-updated');
-        $this->dispatch('conversations-refreshed');
+        $this->dispatch('scrollToBottom');
     }
 
     #[On('conversation-selected')]
@@ -70,13 +69,13 @@ class MessageList extends Component
     public function refreshMessages()
     {
         $this->loadMessages();
-        $this->dispatch('$refresh');
     }
 
     public function dehydrate()
     {
         if ($this->conversation) {
             $this->conversation->load(['users', 'lastMessage', 'messages.user', 'messages.attachments']);
+            $this->dispatch('scrollToBottom');
         }
     }
 

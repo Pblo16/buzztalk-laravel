@@ -15,9 +15,7 @@ class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(public Message $message)
-    {
-    }
+    public function __construct(public Message $message) {}
 
     public function broadcastOn(): array
     {
@@ -29,8 +27,15 @@ class MessageSent implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'message' => $this->message->load(['user', 'attachments'])->toArray(),
-            'conversation_id' => $this->message->conversation_id
+            'message' => array_merge(
+                $this->message->toArray(),
+                [
+                    'user' => $this->message->user,
+                    'attachments' => $this->message->attachments
+                ]
+            ),
+            'conversation_id' => $this->message->conversation_id,
+            'timestamp' => now()->toISOString()
         ];
     }
 

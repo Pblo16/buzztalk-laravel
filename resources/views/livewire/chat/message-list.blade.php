@@ -1,5 +1,8 @@
-<div class="flex-1">
-    <div class="flex-1 overflow-y-auto p-4 space-y-4 max-h-[calc(100vh-220px)] messages-container">
+<div class="flex-1" wire:poll.10s="loadMessages">
+    <div class="flex-1 overflow-y-auto p-4 space-y-4 max-h-[calc(100vh-220px)] messages-container" 
+         id="messages-container"
+         x-data
+         @scrollToBottom.window="$el.scrollTop = $el.scrollHeight">
         @foreach($messages as $message)
         <div class="flex {{ $message->user_id === auth()->id() ? 'justify-end' : 'justify-start' }}"
             wire:key="message-{{ $message->id }}">
