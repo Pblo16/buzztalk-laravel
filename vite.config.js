@@ -9,9 +9,6 @@ export default defineConfig({
         }),
     ],
     define: {
-        'process.env.VITE_REVERB_APP_KEY': JSON.stringify(process.env.VITE_REVERB_APP_KEY),
-        'process.env.VITE_REVERB_HOST': JSON.stringify(process.env.VITE_REVERB_HOST),
-        'process.env.VITE_REVERB_PORT': JSON.stringify(process.env.VITE_REVERB_PORT),
         'process.env.VITE_PUSHER_APP_KEY': JSON.stringify(process.env.VITE_PUSHER_APP_KEY),
         'process.env.VITE_PUSHER_APP_CLUSTER': JSON.stringify(process.env.VITE_PUSHER_APP_CLUSTER),
     }
