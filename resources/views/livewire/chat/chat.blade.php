@@ -1,4 +1,4 @@
-<div class="dark:text-white h-[calc(100vh-70px)] overflow-hidden">
+<div class="dark:text-white h-[calc(100vh-75px)] overflow-hidden">
     <div class="md:grid grid-cols-[350px_1fr] h-full relative">
         <div class="{{ $showMobileChat ? 'hidden' : 'block' }} md:block h-full overflow-hidden">
             <x-chat.sidebar :conversations="$conversations" :currentConversation="$currentConversation" />
