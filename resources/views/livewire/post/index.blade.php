@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center gap-4 h-full w-full overflow-y-auto snap-y snap-mandatory" 
+<div class="flex flex-col items-center gap-4 h-full w-full overflow-y-auto snap-y snap-mandatory px-4 sm:px-0" 
     x-data="{ 
         observeVideo(videoElement) {
             let observer = new IntersectionObserver((entries) => {
@@ -17,17 +17,17 @@
      }">
     @if(count($videos) > 0)
         @foreach($videos as $video)
-        <div class="snap-start w-full max-w-[384px] aspect-[9/16] relative">
-            <video class="w-full h-full object-cover rounded-lg" x-init="observeVideo($el)" data-post-id="{{ $video->id }}"
+        <div class="snap-start min-h-[calc(100dvh-80px)] min w-full sm:max-w-[480px] md:max-w-[480px] aspect-[9/16] relative">
+            <video class="w-full h-full object-cover rounded-lg shadow-lg" x-init="observeVideo($el)" data-post-id="{{ $video->id }}"
                 loop controls playsinline src="{{ Storage::url($video->media_path) }}"></video>
 
-            <div class="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/50 to-transparent text-white">
+            <div class="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/60 to-transparent text-white">
                 <div class="flex items-center gap-2">
-                    <img src="{{ $video->user->profile_photo_url }}" class="w-8 h-8 rounded-full">
-                    <span class="font-bold">{{ $video->user->name }}</span>
+                    <img src="{{ $video->user->profile_photo_url }}" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full">
+                    <span class="font-bold text-sm sm:text-base">{{ $video->user->name }}</span>
                 </div>
-                <p class="mt-2">{{ $video->caption }}</p>
-                <div class="text-sm mt-1">{{ $video->views }} views</div>
+                <p class="mt-2 text-sm sm:text-base">{{ $video->caption }}</p>
+                <div class="text-xs sm:text-sm mt-1 opacity-75">{{ $video->views }} views</div>
             </div>
         </div>
         @endforeach
