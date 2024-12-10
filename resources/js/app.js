@@ -1,6 +1,5 @@
 import './bootstrap';
 import 'preline';
-// Echo initialized in bootstrap.js
 
 const html = document.querySelector('html');
 const isLightOrAuto = localStorage.getItem('hs_theme') === 'light' || (localStorage.getItem('hs_theme') === 'auto' && !window.matchMedia('(prefers-color-scheme: dark)').matches);
