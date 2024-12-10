@@ -51,14 +51,6 @@
         </div>
     </div>
 
-    <!-- Posts Grid -->
-    {{-- <div class="grid grid-cols-3 gap-1">
-        @foreach($posts as $post)
-        <div class="aspect-square">
-            <img src="{{ $post->image_url }}" alt="Post" class="w-full h-full object-cover">
-        </div>
-        @endforeach
-    </div> --}}
 
     <!-- Gallery -->
     <livewire:profile.gallery :user="$user" />

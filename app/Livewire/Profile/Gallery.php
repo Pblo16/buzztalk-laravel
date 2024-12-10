@@ -10,6 +10,10 @@ class Gallery extends Component
 {
     public $posts;
     public User $user;
+    protected $listeners = [
+        'post-deleted' => '$refresh',
+        'post-updated' => '$refresh'
+    ];
 
     public function mount(User $user)
     {

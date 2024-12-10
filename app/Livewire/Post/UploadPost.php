@@ -22,16 +22,18 @@ class UploadPost extends Component
 
     public function updatedMedia()
     {
-        $this->validateOnly('media');
-        
-        // Ensure temporary URL is generated
-        if ($this->media) {
-            try {
-                $this->media->temporaryUrl();
-            } catch (\Exception $e) {
-                Log::error('Error generating temporary URL:', ['error' => $e->getMessage()]);
-                $this->addError('media', 'Error processing media file');
-            }
+        if (!$this->media) {
+            return;
+        }
+
+        try {
+            $this->validateOnly('media');
+            $this->media->temporaryUrl(); // Genera la URL temporal
+            $this->dispatch('media-uploaded'); // Dispara el evento para cambiar al paso 2
+        } catch (\Exception $e) {
+            Log::error('Error processing media:', ['error' => $e->getMessage()]);
+            $this->addError('media', 'Failed to process media file. Please try again.');
+            $this->media = null; // Reset media if there's an error
         }
     }
 

@@ -30,7 +30,7 @@ class Index extends Component
             $request = FriendRequest::where('sender_id', auth()->id())
                 ->where('receiver_id', $this->user->id)
                 ->first();
-            
+
             $this->requestStatus = $request ? $request->status : null;
             $this->isFollowing = $request && $request->status === 'accepted';
         }

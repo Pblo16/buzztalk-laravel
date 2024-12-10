@@ -18,7 +18,7 @@
         <a href="/profile/{{ $user->name }}" wire:navigate
             class="p-3 hover:bg-gray-100 dark:hover:bg-neutral-700 flex items-center justify-between">
             <div class="flex items-center">
-                <img src="{{ $user->profile_photo_url }}" class="size-8 rounded-full mr-3">
+                <img src="{{ $user->profile_photo_url }}" class="size-8 rounded-full mr-3 object-fill">
                 <span class="text-gray-800 dark:text-white">{{ $user->name }}</span>
             </div>
         </a>
