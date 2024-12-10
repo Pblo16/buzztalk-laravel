@@ -9,10 +9,10 @@ export default defineConfig({
         }),
     ],
     define: {
-        'process.env.VITE_PUSHER_APP_KEY': JSON.stringify(process.env.VITE_PUSHER_APP_KEY),
-        'process.env.VITE_PUSHER_APP_CLUSTER': JSON.stringify(process.env.VITE_PUSHER_APP_CLUSTER),
-        'process.env.VITE_PUSHER_SCHEME': JSON.stringify(process.env.VITE_PUSHER_SCHEME || 'https'),
-        'process.env.VITE_PUSHER_HOST': JSON.stringify(process.env.VITE_PUSHER_HOST),
-        'process.env.VITE_PUSHER_PORT': JSON.stringify(process.env.VITE_PUSHER_PORT || 443),
+        'import.meta.env.VITE_PUSHER_APP_KEY': JSON.stringify(process.env.VITE_PUSHER_APP_KEY),
+        'import.meta.env.VITE_PUSHER_APP_CLUSTER': JSON.stringify(process.env.VITE_PUSHER_APP_CLUSTER),
+        'import.meta.env.VITE_PUSHER_SCHEME': JSON.stringify(process.env.VITE_PUSHER_SCHEME),
+        'import.meta.env.VITE_PUSHER_HOST': JSON.stringify(process.env.VITE_PUSHER_HOST),
+        'import.meta.env.VITE_PUSHER_PORT': JSON.stringify(process.env.VITE_PUSHER_PORT),
     }
 });

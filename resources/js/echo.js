@@ -3,13 +3,18 @@ import Pusher from 'pusher-js';
 
 window.Pusher = Pusher;
 
-window.Echo = new Echo({
+const options = {
     broadcaster: 'pusher',
-    key: '20e31dd6a985852b03a5',
-    cluster: 'us2',
+    key: import.meta.env.VITE_PUSHER_APP_KEY,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
     forceTLS: true,
     encrypted: true,
     enabledTransports: ['ws', 'wss'],
-});
+};
 
-console.log(window.Echo.options);
+window.Echo = new Echo(options);
+
+// Optional: remove this in production
+if (import.meta.env.DEV) {
+    console.log('Echo options:', options);
+}
