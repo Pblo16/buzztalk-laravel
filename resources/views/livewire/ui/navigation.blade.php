@@ -97,7 +97,6 @@
                             </a>
 
                         </li>
-                        @else
 
                         @endauth
                     </ul>
@@ -105,6 +104,7 @@
 
             </div>
             @auth
+            @else
             @if (Route::has('login'))
             <div class="space-x-4">
                 @auth
