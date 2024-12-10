@@ -11,5 +11,3 @@ window.Echo = new Echo({
     encrypted: true,
     enabledTransports: ['ws', 'wss'],
 });
-
-console.log(window.Echo.options);
