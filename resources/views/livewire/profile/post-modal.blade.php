@@ -35,8 +35,8 @@
                     </div>
                     <div class="w-1/3 p-4 overflow-y-auto">
                         <div class="flex items-center mb-4">
-                            <a href="/profile/{{ $post->user->name }}">
-                                <img src=" {{ $post->user->profile_photo_url }}" alt="{{ $post->user->name }}"
+                            <a class="inline-flex items-center" href="/profile/{{ $post->user->name }}">
+                                <img src="{{ $post->user->profile_photo_url }}" alt="{{ $post->user->name }}"
                                     class="w-10 h-10 rounded-full">
                                 <span class="ml-2 font-semibold dark:text-white">{{ $post->user->name }}</span>
                             </a>
