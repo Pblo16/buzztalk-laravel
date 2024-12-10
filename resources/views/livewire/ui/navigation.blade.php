@@ -97,28 +97,19 @@
                             </a>
 
                         </li>
-
+                        @else
+                        @if (Route::has('login'))
+                        <li class="space-x-4 flex">
+                            <a href="{{ route('login') }}"
+                                class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white ">Log
+                                in</a>
+                        </li>
+                        @endif
                         @endauth
                     </ul>
                 </nav>
 
             </div>
-            @auth
-            @else
-            @if (Route::has('login'))
-            <div class="space-x-4 flex">
-                @auth
-                <a href="{{ url('/dashboard') }}"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
-                @else
-                <a href="{{ route('login') }}"
-                    class="transition-colors bg-gray-200 text-black hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium dark:text-white dark:bg-[#252525] dark:hover:bg-white dark:hover:text-black">Log
-                    in</a>
-
-                @endauth
-            </div>
-            @endif
-            @endauth
         </div>
     </div>
     <!-- End Sidebar -->
