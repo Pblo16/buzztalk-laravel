@@ -38,8 +38,8 @@
                             <a href="/profile/{{ $post->user->name }}">
                                 <img src=" {{ $post->user->profile_photo_url }}" alt="{{ $post->user->name }}"
                                     class="w-10 h-10 rounded-full">
+                                <span class="ml-2 font-semibold dark:text-white">{{ $post->user->name }}</span>
                             </a>
-                            <span class="ml-2 font-semibold dark:text-white">{{ $post->user->name }}</span>
                         </div>
                         <p class="text-gray-700 dark:text-gray-300">{{ $post->caption }}</p>
                     </div>
