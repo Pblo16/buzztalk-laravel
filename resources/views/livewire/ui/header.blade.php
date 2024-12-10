@@ -20,6 +20,20 @@
                         </svg>
 
                     </a>
+                    @else
+                    @if (Route::has('login'))
+                    <div class="space-x-4">
+                        @auth
+                        <a href="{{ url('/dashboard') }}"
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
+                        @else
+                        <a href="{{ route('login') }}"
+                            class="transition-colors bg-gray-200 text-black hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium dark:text-white dark:bg-[#252525] dark:hover:bg-white dark:hover:text-black">Log
+                            in</a>
+
+                        @endauth
+                    </div>
+                    @endif
                     @endauth
                 </div>
             </div>

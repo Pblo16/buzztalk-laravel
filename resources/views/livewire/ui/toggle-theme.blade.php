@@ -42,6 +42,12 @@
             </button>
         </div>
         <!-- End Theme Switcher -->
-    </x-slot>
+        <form method="POST" action="{{ route('logout') }}" x-data>
+            @csrf
 
+            <x-button class="ml-2" type="submit">
+                Log Out
+            </x-button>
+        </form>
+    </x-slot>
 </x-action-section>

@@ -18,8 +18,10 @@
                 <div class="flex items-center gap-4 mb-4">
                     <h1 class="text-2xl font-semibold">{{ $user->username }}</h1>
                     @if($isOwner)
-                    <a  href="{{route('profile.show')}}"
+                    <a href="{{route('profile.show')}}"
                         class="px-4 py-1.5 bg-gray-100 rounded-md font-semibold text-black">Edit Profile</a>
+                    
+
                     @else
                     @switch($requestStatus)
                     @case('pending')
