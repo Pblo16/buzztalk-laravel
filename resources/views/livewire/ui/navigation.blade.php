@@ -106,7 +106,7 @@
             @auth
             @else
             @if (Route::has('login'))
-            <div class="space-x-4">
+            <div class="space-x-4 flex">
                 @auth
                 <a href="{{ url('/dashboard') }}"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
