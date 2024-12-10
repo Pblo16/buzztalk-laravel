@@ -38,4 +38,8 @@ Route::middleware([
     Route::get('/upload-post', function () {
         return view('post');
     })->middleware(['auth'])->name('post.upload');
+
+    Route::get('/feed', function () {
+        return view('feed');
+    })->middleware(['auth'])->name('post.feed');
 });
