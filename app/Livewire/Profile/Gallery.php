@@ -24,19 +24,7 @@ class Gallery extends Component
 
     public function showPostModal($postId)
     {
-        $post = $this->posts->find($postId);
-        $postData = [
-            'id' => $post->id,
-            'media_type' => $post->media_type,
-            'media_url' => $post->media_url,
-            'user' => [
-                'name' => $post->user->name,
-                'profile_photo_url' => $post->user->profile_photo_url
-            ],
-            'caption' => $post->caption,
-        ];
-
-        $this->dispatch('show-post', postData: $postData);
+        $this->dispatch('showPost', postId: $postId);
     }
 
     public function render()

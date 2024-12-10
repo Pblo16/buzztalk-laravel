@@ -1,18 +1,23 @@
 <?php
 
-namespace App\Livewire\Profile;
+namespace App\Http\Livewire\Profile;
 
-use App\Models\Post;
 use Livewire\Component;
+use App\Models\Post;
 
 class PostModal extends Component
 {
     public $show = false;
-    public $post = null;
+    public $post;
 
-    protected $listeners = ['showPost'];
+    public function mount()
+    {
+        $this->listeners = [
+            'showPost' => 'showPostModal'
+        ];
+    }
 
-    public function showPost($postId)
+    public function showPostModal($postId)
     {
         $this->post = Post::with('user')->find($postId);
         $this->show = true;
