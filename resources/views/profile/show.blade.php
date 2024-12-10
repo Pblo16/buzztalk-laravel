@@ -33,5 +33,11 @@
             @livewire('profile.delete-user-form')
         </div>
         @endif
+        <x-section-border />
+
+        <div class="mt-10 sm:mt-0">
+            @livewire('ui.toggle-theme')
+        </div>
+
     </div>
 </x-app-layout>

@@ -17,20 +17,21 @@
     <!-- Make sure this is after Vite -->
     @livewireStyles
 
+    @livewireScripts
 </head>
 
 <body
     class="font-sans antialiased bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px] dark:bg-[#252525] min-h-dvh flex flex-col">
-    <livewire:ui.navigation />
+    <livewire:ui.header />
     <!-- Main content wrapper -->
     <div class="flex flex-1 h-full">
         <!-- Page Content -->
-        <main class="lg:ps-60 dark:bg-[#252525]/100 w-full flex-1">
+        <main class="md:ps-60 dark:bg-[#252525]/100 w-full flex-1">
             {{ $slot }}
         </main>
     </div>
-
-    @livewireScripts
+    <livewire:ui.navigation-mobile />
+    <livewire:ui.navigation />
     @stack('modals')
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

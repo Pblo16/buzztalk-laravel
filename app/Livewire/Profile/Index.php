@@ -14,7 +14,7 @@ class Index extends Component
     public $username;
     public $isFollowing = false;
     public $requestStatus = null;
-    public $isOwner = false;  // Add this property
+    public $isOwner = false;
 
     public function mount($username = null)
     {
