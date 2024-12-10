@@ -6,7 +6,7 @@
             alt="{{ $conversation->name }}" class="w-12 h-12 rounded-full object-cover">
         <div class="flex-1">
             <h3 class="font-medium">{{ $conversation->name }}</h3>
-            <p class="text-sm text-gray-500">{{ Str::limit($conversation->lastMessage?->content ?? 'No messages yet', 30, '...') }}</p>
+            <p class="text-sm text-gray-500">{{ Str::limit($conversation->lastMessage?->content ?? 'No messages yet', 20, '...') }}</p>
         </div>
     </div>
 </div>

@@ -25,7 +25,7 @@ class MessageInput extends Component
         try {
             $this->validate([
                 'message' => 'nullable|string',
-                'attachments.*' => 'required_without:message|file|max:20480|mimes:jpeg,png,jpg,gif,pdf,doc,docx,xls,xlsx,txt',
+                'attachments.*' => 'required_without:message|file|max:51200|mimes:jpeg,png,jpg,gif,pdf,doc,docx,xls,xlsx,txt,mp4,mov,avi,wmv',
             ]);
 
             if (empty($this->message) && empty($this->attachments)) {

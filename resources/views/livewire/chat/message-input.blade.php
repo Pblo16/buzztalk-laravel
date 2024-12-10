@@ -20,7 +20,7 @@
             style="max-height: 150px; min-height: 40px;" placeholder="Type a message..." rows="1"></textarea>
         <div class="flex mb-0 align-bottom">
             <input type="file" id="attachment" wire:model="attachments" x-ref="fileInput" class="hidden"
-                accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,image/*" multiple>
+                accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.txt" multiple>
             <label for="attachment" x-data @click.prevent="$refs.fileInput.click()"
                 class="cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600 text-black dark:text-white rounded-sm p-2 ">
                 <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"
