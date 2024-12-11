@@ -24,6 +24,10 @@
                 <nav class="hs-accordion-group p-3 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
                     <ul class="flex flex-col space-y-1">
                         <li>
+                            <livewire:search-users />
+
+                        </li>
+                        <li>
                             <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-1xl text-gray-800 rounded-lg hover:bg-gray-400 focus:outline-none focus:bg-gray-400 dark:text-white {{ Route::is('video') ? 'bg-gray-100 dark:bg-neutral-700' : '' }}"
                                 href="{{ route('video') }}">
                                 <svg class="shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
