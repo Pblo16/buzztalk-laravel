@@ -1,5 +1,5 @@
 <!-- Mobile Navigation Bar -->
-<div class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-[#333] md:hidden min-h-16">
+<div class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-[#333] md:hidden min-h-12">
     <div class="flex justify-around py-2">
         <a wire:navigate href="{{ route('video') }}"
             class="flex flex-col items-center text-gray-800 dark:text-white {{ Route::is('video') ? 'text-blue-600' : '' }}">

@@ -1,4 +1,4 @@
-<div class="px-2 py-4 border-t dark:border-gray-800 bg-[#D4D4D8]/40 dark:bg-[#333333]/60 mx-2 rounded-lg">
+<div class="px-2 py-4 border-t dark:border-gray-800 bg-[#D4D4D8]/40 dark:bg-[#333333]/60 mx-2 rounded-lg mb-12 md:mb-0">
     @if($attachments && count($attachments) > 0)
     <div class="mt-2 text-sm text-gray-500 absolute -translate-y-11 flex overflow-x-auto">
         @foreach($attachments as $attachment)

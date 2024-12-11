@@ -1,7 +1,7 @@
 @props(['currentConversation'])
 
 <div class="h-full flex flex-col dark:bg-[#252525] border-r-2 border-gray-300 dark:border-black overflow-hidden">
-    <div class="flex-1 overflow-y-auto min-h-0">
+    <div class="flex-1 overflow-y-auto">
         @livewire('chat.contact-list')
     </div>
 

@@ -1,10 +1,11 @@
-<div class="dark:text-white h-dvh overflow-hidden">
+<div class="dark:text-white h-[calc(100dvh-120px)] md:h-full overflow-hidden">
     <div class="md:grid grid-cols-[350px_1fr] h-full relative">
         <div class="{{ $showMobileChat ? 'hidden' : 'block' }} md:block h-full overflow-hidden">
             <x-chat.sidebar :conversations="$conversations" :currentConversation="$currentConversation" />
         </div>
 
-        <div class="h-full overflow-hidden {{ $showMobileChat ? 'fixed inset-0 z-50 bg-white dark:bg-[#252525]' : 'hidden' }} md:block">
+        <div
+            class="h-full overflow-hidden {{ $showMobileChat ? 'fixed inset-0 z-50 bg-white dark:bg-[#252525] pb-16' : 'hidden' }} md:block">
             @if($currentConversation)
             <div class="flex flex-col h-full">
                 <div class="p-4 bg-gray-100 dark:bg-[#252525] md:hidden">
